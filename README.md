@@ -3,7 +3,7 @@
 ![Static Badge](https://img.shields.io/badge/github_pages-121013?logo=GitHub)
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC_BY--NC--ND_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
-This repository has been created to store and publish content for https://cabinet.companimal.net, including various artworks and resources.
+This repository has been created to store and publish content for <https://cabinet-pets.palgle.com>, including various artworks and resources.
 
 ## Sizes
 
@@ -14,16 +14,16 @@ This repository has been created to store and publish content for https://cabine
 
 ## URLs
 
-Scheme + Domain : https://cabinet.companimal.net
+Scheme + Domain : <https://cabinet-pets.palgle.com>
 
 |   Size   | Path                                                                                 |                 Preview                 |
 | :------: | ------------------------------------------------------------------------------------ | :-------------------------------------: |
-|  Small   | [/avatars/dog/small/1.png](https://cabinet.companimal.net/avatars/small/dog/1.png)   | ![Dog Small](/avatars/dog/small/1.png)  |
-|  Medium  | [/avatars/dog/medium/1.png](https://cabinet.companimal.net/avatars/medium/dog/1.png) | ![Dog Small](/avatars/dog/medium/1.png) |
-|  Large   | [/avatars/dog/large/1.png](https://cabinet.companimal.net/avatars/dog/large/1.png)   | ![Dog Small](/avatars/dog/large/1.png)  |
-| Original | [/avatars/dog/1.png](https://cabinet.companimal.net/avatars/dog/1.png)               |    ![Dog Small](/avatars/dog/1.png)     |
+|  Small   | [/avatars/dog/small/1.png](https://cabinet-pets.palgle.com/avatars/small/dog/1.png)   | ![Dog Small](/avatars/dog/small/1.png)  |
+|  Medium  | [/avatars/dog/medium/1.png](https://cabinet-pets.palgle.com/avatars/medium/dog/1.png) | ![Dog Small](/avatars/dog/medium/1.png) |
+|  Large   | [/avatars/dog/large/1.png](https://cabinet-pets.palgle.com/avatars/dog/large/1.png)   | ![Dog Small](/avatars/dog/large/1.png)  |
+| Original | [/avatars/dog/1.png](https://cabinet-pets.palgle.com/avatars/dog/1.png)               |    ![Dog Small](/avatars/dog/1.png)     |
 
-For example, https://cabinet.companimal.net/avatars/dog/1.png
+For example, <https://cabinet-pets.palgle.com/avatars/dog/1.png>
 
 ## Showcase
 
@@ -168,4 +168,4 @@ For example, https://cabinet.companimal.net/avatars/dog/1.png
 
 ## License
 
-[Artworks](https://github.com/companimal/cabinet) © 2020 by [Companimal](https://www.companimal.net) is licensed under CC BY-NC-ND 4.0. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/
+[Artworks](https://github.com/companimal/cabinet) © 2020 by [Companimal](https://www.companimal.net) is licensed under CC BY-NC-ND 4.0. To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc-nd/4.0/>
