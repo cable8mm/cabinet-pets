@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Companimal Cabinet - Premium Avatar Gallery</title>
+  <meta name="description" content="A premium library of beautiful companion animal artwork assets including dogs, cats, and other animals. Available in multiple sizes.">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="hero-logo-container">
+        <h1>Companimal Cabinet</h1>
+      </div>
+      <div class="hero-badge-group">
+        <span class="hero-badge"><i class="fa-solid fa-image"></i> 130 High Quality Avatars</span>
+        <span class="hero-badge"><i class="fa-solid fa-crop"></i> 4 Size Scales</span>
+        <span class="hero-badge"><i class="fa-solid fa-scale-balanced"></i> CC BY-NC-ND 4.0</span>
+      </div>
+      
+      <p class="lead">
+        A curated, high-quality repository of companion animal artwork, illustrations, and avatar resources. Easily discover, preview, and integrate them into your projects.
+      </p>
+
+      <div class="license-box">
+        <div class="license-info">
+          <h3>Creative Commons Licensing</h3>
+          <p>
+            Artworks are licensed under <strong>CC BY-NC-ND 4.0</strong>. You are free to share, copy, and redistribute the material in any medium or format under attribution, non-commercial, and no-derivatives terms.
+          </p>
+        </div>
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer" class="license-badge">
+          <span>License</span>
+          <strong>CC BY-NC-ND</strong>
+        </a>
+      </div>
+    </header>
+
+    <div class="controls-bar">
+      <div class="filter-tabs" role="tablist">
+        <button class="tab-btn active" data-filter="all" role="tab" aria-selected="true">
+          <i class="fa-solid fa-border-all"></i> All
+        </button>
+        <button class="tab-btn" data-filter="dog" role="tab" aria-selected="false">
+          <i class="fa-solid fa-dog"></i> Dogs
+        </button>
+        <button class="tab-btn" data-filter="cat" role="tab" aria-selected="false">
+          <i class="fa-solid fa-cat"></i> Cats
+        </button>
+        <button class="tab-btn" data-filter="animal" role="tab" aria-selected="false">
+          <i class="fa-solid fa-paw"></i> Other Animals
+        </button>
+      </div>
+
+      <div class="search-wrapper">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" class="search-input" id="avatarSearch" placeholder="Search by name or number (e.g. 15)..." aria-label="Search avatars">
+      </div>
+
+      <div class="stats-counter" id="statsCounter">
+        Showing 130 avatars
+      </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <main class="gallery-grid" id="galleryGrid">
+      <!-- Cards will be dynamically rendered via JS -->
+    </main>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="detailModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-container">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+      <div class="modal-preview-side">
+        <div class="modal-img-container">
+          <img src="" alt="" class="modal-img" id="modalImg">
+        </div>
+        <div class="size-selector">
+          <div class="size-opt active" data-size="medium">Medium</div>
+          <div class="size-opt" data-size="small">Small</div>
+          <div class="size-opt" data-size="large">Large</div>
+          <div class="size-opt" data-size="original">Original</div>
+        </div>
+      </div>
+
+      <div class="modal-details-side">
+        <div class="modal-title-area">
+          <span class="modal-category-badge" id="modalCategoryBadge"></span>
+          <h2 class="modal-title" id="modalTitle"></h2>
+        </div>
+
+        <div class="asset-details">
+          <div class="detail-row">
+            <span class="detail-label">Resolution</span>
+            <span class="detail-val" id="detailResolution">200 x 200 px</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Format</span>
+            <span class="detail-val">PNG (Transparent)</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Relative Path</span>
+            <span class="detail-val" id="detailPath">/avatars/dog/medium/1.png</span>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn-action btn-primary" id="copyUrlBtn">
+            <i class="fa-solid fa-link"></i> Copy CDN URL
+          </button>
+          <button class="btn-action btn-secondary" id="copyMarkdownBtn">
+            <i class="fa-solid fa-code"></i> Copy Markdown Tag
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <footer>
+    <div class="container">
+      <p>
+        &copy; 2026 by <a href="https://www.etern.co.kr" target="_blank" rel="noopener">ETERNOps</a>. All rights reserved.
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+        Hosted on GitHub Pages &bull; View source on <a href="https://github.com/cable8mm/cabinet-pets" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Gallery Logic -->
+  <script>
+    // Data structures representing the files
+    const totalDogs = 80;
+    const totalCats = 41;
+    const totalAnimals = 9;
+
+    const avatars = [];
+
+    // Populate Dogs
+    for (let i = 1; i <= totalDogs; i++) {
+      avatars.push({
+        id: `dog-${i}`,
+        name: `Dog Avatar #${i}`,
+        category: 'dog',
+        index: i
+      });
+    }
+
+    // Populate Cats
+    for (let i = 1; i <= totalCats; i++) {
+      avatars.push({
+        id: `cat-${i}`,
+        name: `Cat Avatar #${i}`,
+        category: 'cat',
+        index: i
+      });
+    }
+
+    // Populate Animals
+    for (let i = 1; i <= totalAnimals; i++) {
+      avatars.push({
+        id: `animal-${i}`,
+        name: `Animal Avatar #${i}`,
+        category: 'animal',
+        index: i
+      });
+    }
+
+    // State
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let selectedAvatar = null;
+    let selectedSize = 'medium';
+
+    // DOM Elements
+    const galleryGrid = document.getElementById('galleryGrid');
+    const searchInput = document.getElementById('avatarSearch');
+    const statsCounter = document.getElementById('statsCounter');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    
+    // Modal DOM Elements
+    const detailModal = document.getElementById('detailModal');
+    const modalClose = document.getElementById('modalClose');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCategoryBadge = document.getElementById('modalCategoryBadge');
+    const detailPath = document.getElementById('detailPath');
+    const detailResolution = document.getElementById('detailResolution');
+    const sizeOpts = document.querySelectorAll('.size-opt');
+    const copyUrlBtn = document.getElementById('copyUrlBtn');
+    const copyMarkdownBtn = document.getElementById('copyMarkdownBtn');
+    const toastContainer = document.getElementById('toastContainer');
+
+    // Get resolution info by size
+    function getResolution(size) {
+      switch(size) {
+        case 'small': return '100 x 100 px';
+        case 'medium': return '200 x 200 px';
+        case 'large': return '400 x 400 px';
+        case 'original': return 'Original Size';
+        default: return '200 x 200 px';
+      }
+    }
+
+    // Get asset paths
+    function getAssetPath(category, index, size) {
+      if (size === 'original') {
+        return `avatars/${category}/${index}.png`;
+      }
+      return `avatars/${category}/${size}/${index}.png`;
+    }
+
+    // Render Cards
+    function renderGallery() {
+      const filtered = avatars.filter(item => {
+        const matchesFilter = currentFilter === 'all' || item.category === currentFilter;
+        const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                              item.index.toString() === searchQuery.trim();
+        return matchesFilter && matchesSearch;
+      });
+
+      galleryGrid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        galleryGrid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
+            <i class="fa-solid fa-paw" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+            <p>No avatars match your search criteria.</p>
+          </div>
+        `;
+        statsCounter.textContent = 'Showing 0 avatars';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        
+        const previewUrl = getAssetPath(item.category, item.index, 'medium');
+
+        card.innerHTML = `
+          <div class="card-img-wrapper">
+            <img src="${previewUrl}" alt="${item.name}" class="card-img" loading="lazy">
+          </div>
+          <div class="card-info">
+            <h3 class="card-title">${item.name}</h3>
+            <div class="card-tags">
+              <span class="card-tag ${item.category}">${item.category.toUpperCase()}</span>
+              <span class="card-tag">#${item.index}</span>
+            </div>
+          </div>
+        `;
+
+        // Card interaction
+        const openDetail = () => {
+          selectedAvatar = item;
+          selectedSize = 'medium';
+          updateModalContent();
+          detailModal.classList.add('active');
+          detailModal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        };
+
+        card.addEventListener('click', openDetail);
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openDetail();
+          }
+        });
+
+        galleryGrid.appendChild(card);
+      });
+
+      statsCounter.textContent = `Showing ${filtered.length} of ${avatars.length} avatars`;
+    }
+
+    // Modal Size Update
+    function updateModalContent() {
+      if (!selectedAvatar) return;
+
+      const { category, index, name } = selectedAvatar;
+      const path = getAssetPath(category, index, selectedSize);
+      
+      // Update UI state of sizes
+      sizeOpts.forEach(opt => {
+        if (opt.getAttribute('data-size') === selectedSize) {
+          opt.classList.add('active');
+        } else {
+          opt.classList.remove('active');
+        }
+      });
+
+      modalImg.src = path;
+      modalImg.alt = name;
+      modalTitle.textContent = name;
+      modalCategoryBadge.textContent = category.toUpperCase();
+      modalCategoryBadge.className = `modal-category-badge card-tag ${category}`;
+      detailPath.textContent = `/${path}`;
+      detailResolution.textContent = getResolution(selectedSize);
+    }
+
+    // Toast Notice helper
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${message}`;
+      toastContainer.appendChild(toast);
+      
+      // Trigger layout flow to allow animation transition
+      toast.offsetHeight;
+      
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 2500);
+    }
+
+    // Helper to get absolute CDN URLs
+    function getAbsoluteUrl(path) {
+      const domain = 'https://cabinet-pets.palgle.com';
+      return `${domain}/${path}`;
+    }
+
+    // Close Modal
+    function closeModal() {
+      detailModal.classList.remove('active');
+      detailModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      selectedAvatar = null;
+    }
+
+    // Event Listeners
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderGallery();
+    });
+
+    // Tab buttons
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        currentFilter = btn.getAttribute('data-filter');
+        renderGallery();
+      });
+    });
+
+    // Modal Size Change
+    sizeOpts.forEach(opt => {
+      opt.addEventListener('click', () => {
+        selectedSize = opt.getAttribute('data-size');
+        updateModalContent();
+      });
+    });
+
+    // Copy CDN URL
+    copyUrlBtn.addEventListener('click', () => {
+      if (!selectedAvatar) return;
+      const path = getAssetPath(selectedAvatar.category, selectedAvatar.index, selectedSize);
+      const absUrl = getAbsoluteUrl(path);
+      
+      navigator.clipboard.writeText(absUrl).then(() => {
+        showToast('CDN URL copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+    });
+
+    // Copy Markdown Tag
+    copyMarkdownBtn.addEventListener('click', () => {
+      if (!selectedAvatar) return;
+      const path = getAssetPath(selectedAvatar.category, selectedAvatar.index, selectedSize);
+      const absUrl = getAbsoluteUrl(path);
+      const mdCode = `![${selectedAvatar.name}](${absUrl})`;
+      
+      navigator.clipboard.writeText(mdCode).then(() => {
+        showToast('Markdown Image Tag copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+    });
+
+    // Close on overlay click
+    detailModal.addEventListener('click', (e) => {
+      if (e.target === detailModal) {
+        closeModal();
+      }
+    });
+
+    modalClose.addEventListener('click', closeModal);
+
+    // Escape Key to close modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && detailModal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // Initial load
+    renderGallery();
+  </script>
+</body>
+</html>
